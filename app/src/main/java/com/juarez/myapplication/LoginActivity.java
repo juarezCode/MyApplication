@@ -23,15 +23,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
+    private  String TAG = "LoginActivity";
     private Button btnLogin;
     private String apikey = "PPDZ39EGKOEHNR3R";
     private String userkey = "JOEZYXMFGR0RDBXA";
     private String username = "tavromero2yu";
-    private final String endpoint = "api.thetvdb.com";
+    public static  final String endpoint = "api.thetvdb.com";
     private String token;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TOKEN = "token";
     public String texto;
+    public boolean isSuccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), SeriesActivity.class);
                 startActivity(intent);
 
+
+
             }
         });
 
@@ -55,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //peticion POST obtener token
-    private String sendNetworkRequest(Key key) {
+    private boolean sendNetworkRequest(Key key) {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("https://" + endpoint + "/")
                 .addConverterFactory(GsonConverterFactory.create());
@@ -68,23 +72,25 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Key> call, Response<Key> response) {
                 Toast.makeText(getApplicationContext(), "token: " + response.body().getToken(), Toast.LENGTH_SHORT).show();
-                Log.e("Token on response", response.body().getToken());
+                Log.e(TAG,"getToken: "+ response.body().getToken());
                 token = response.body().getToken();
                 saveToken(token);
+                isSuccess = true;
             }
 
             @Override
             public void onFailure(Call<Key> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "something went wrong :(", Toast.LENGTH_SHORT).show();
                 Log.e("Error", t.toString());
+                isSuccess = false;
 
 
             }
         });
-        return token;
+        return isSuccess;
     }
     public void saveToken(String token){
-        Log.e("savetoken",token);
+        Log.e(TAG,"savetoken: "+token);
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TOKEN, token).commit();

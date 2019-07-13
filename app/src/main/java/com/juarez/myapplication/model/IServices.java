@@ -15,4 +15,7 @@ public interface IServices {
 
     @POST("login")
     Call<Key> getToken(@Body Key key);
+
+    @GET("search/series")
+    Call<Data> getSeries(@Query("name") String CharName,@Header("Authorization") String authToken);
 }

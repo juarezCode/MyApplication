@@ -1,6 +1,7 @@
 package com.juarez.myapplication.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.juarez.myapplication.DetailActivity;
 import com.juarez.myapplication.R;
 import com.juarez.myapplication.SeriesActivity;
 import com.juarez.myapplication.model.Series;
@@ -64,11 +66,16 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
                 .placeholder(R.drawable.mediomelon)
                 .into(holder.photo);
         holder.serieName.setText(mDataset.get(position).getSeriesName());
+        //lanzar a pantalla detalles de serie
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Adapter","click "+mDataset.get(position).getIdSerie());
+                Log.e("Adapter","id: "+mDataset.get(position).getId());
                 Toast.makeText(v.getContext(),mDataset.get(position).getSeriesName(),Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(v.getContext(), DetailActivity.class);
+                intent.putExtra("seriesName",  mDataset.get(position).getSeriesName());
+                v.getContext().startActivity(intent);
             }
         });
 

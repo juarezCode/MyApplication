@@ -97,8 +97,10 @@ public class SeriesActivity extends AppCompatActivity {
                 edtSearch.setText("");
                 btnSearch.setVisibility(View.VISIBLE);
                 //limpio adaptador y y recyvlerview, ademas oculto el boton
-                myDataSet.clear();
-                mAdapter.notifyDataSetChanged();
+                if (myDataSet != null){
+                    myDataSet.clear();
+                    mAdapter.notifyDataSetChanged();
+                }
                 btnErase.setVisibility(View.GONE);
             }
         });

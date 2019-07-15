@@ -38,6 +38,14 @@
                     android:hint="Serie a buscar..." />
 
                 <Button
+                    android:id="@+id/btnErase"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent"
+                    android:foreground="@drawable/ic_close_black_24dp"
+                    android:visibility="gone" />
+
+                <Button
                     android:id="@+id/btnSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -48,6 +56,7 @@
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerSeries"

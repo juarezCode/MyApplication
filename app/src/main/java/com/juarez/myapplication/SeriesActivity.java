@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +26,7 @@ import com.juarez.myapplication.model.Series;
 
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +42,7 @@ public class SeriesActivity extends AppCompatActivity {
     public static String TAG = "SeriesActivity";
     private Button btnSearch;
     private EditText edtSearch;
+    private Button btnErase;
     private String searchValue;
     RecyclerView recyclerSeries;
     private SeriesAdapter mAdapter;
@@ -51,6 +55,7 @@ public class SeriesActivity extends AppCompatActivity {
         showToolbar();
         btnSearch = findViewById(R.id.btnSearch);
         edtSearch = findViewById(R.id.edtSearchview);
+        btnErase = findViewById(R.id.btnErase);
         //recyclerview
         recyclerSeries = findViewById(R.id.recyclerSeries);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -65,21 +70,36 @@ public class SeriesActivity extends AppCompatActivity {
         recyclerSeries.setAdapter(madapter);*/
 
 
-
-
+        //comportamiento boton buscar
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                //si se escribe algo en la barra de busqueda, hace la peticion, caso contrario muestra toast
                 searchValue = edtSearch.getText().toString();
                 if (searchValue.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "debes ingresar algo", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "campo vacio");
                 } else {
+                    //habilito boton borrar y oculto buscar
+                    btnErase.setVisibility(View.VISIBLE);
+                    btnSearch.setVisibility(View.GONE);
                     //web search
                     loadToken();
                     getSearchRequest();
                 }
+            }
+        });
+        //comportamiento boton borrar
+        btnErase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtSearch.setText("");
+                btnSearch.setVisibility(View.VISIBLE);
+                //limpio adaptador y y recyvlerview, ademas oculto el boton
+                myDataSet.clear();
+                mAdapter.notifyDataSetChanged();
+                btnErase.setVisibility(View.GONE);
             }
         });
     }
@@ -97,15 +117,19 @@ public class SeriesActivity extends AppCompatActivity {
         if (recyclerSeries == null) {
             return;
         }
+        mAdapter = null;// cuando es nulo recarga la vista, la actualiza
         if (mAdapter == null) {
             mAdapter = new SeriesAdapter(this, myDataSet);
             recyclerSeries.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
+
         }
+
     }
 
     private void getSearchRequest() {
+        //comfig Retrofit
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("https://" + LoginActivity.endpoint + "/")
                 .addConverterFactory(GsonConverterFactory.create());
@@ -120,12 +144,14 @@ public class SeriesActivity extends AppCompatActivity {
             public void onResponse(Call<Data> call, Response<Data> response) {
 
                 if (response.isSuccessful()) {
-                    myDataSet = new ArrayList<Series>();
+                    final AtomicInteger count = new AtomicInteger(0);//permite incrementar cada vez que es llamado, me sirve para el id
+                    myDataSet = new ArrayList<Series>();//crear ArrayList Vacio
                     myDataSet.clear();//limpio el Arralist
-                    int i= 0;
-                    Log.e(TAG, "Series Found: " + String.valueOf(response.body().getSeries()));
-                    for (Series series : response.body().getSeries()){
 
+                    Log.e(TAG, "Series Found: " + String.valueOf(response.body().getSeries()));
+
+                    for (Series series : response.body().getSeries()){
+                        series.setIdSerie(count.incrementAndGet());
                         Log.e(TAG, series.getIdSerie()+" nombre de la serie: " + series.getSeriesName());
 
                         myDataSet.add(series);
@@ -146,7 +172,7 @@ public class SeriesActivity extends AppCompatActivity {
 
 
     }
-
+    //config Toolbar personalizado
     private void showToolbar() {
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
         Toolbar toolbar = findViewById(R.id.toolbar);

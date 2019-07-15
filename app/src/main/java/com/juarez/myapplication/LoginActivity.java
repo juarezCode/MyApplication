@@ -23,12 +23,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
-    private  String TAG = "LoginActivity";
+    private String TAG = "LoginActivity";
     private Button btnLogin;
     private String apikey = "PPDZ39EGKOEHNR3R";
     private String userkey = "JOEZYXMFGR0RDBXA";
     private String username = "tavromero2yu";
-    public static  final String endpoint = "api.thetvdb.com";
+    public static final String endpoint = "api.thetvdb.com";
     private String token;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TOKEN = "token";
@@ -41,21 +41,19 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         btnLogin = findViewById(R.id.btnLogin);
 
+        //comportamiento boton obtenerToken (Login)
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Key key = new Key(apikey, userkey, username);
-                sendNetworkRequest(key);
-                Intent intent = new Intent(getApplicationContext(), SeriesActivity.class);
-                startActivity(intent);
-
-
+            //crea instancia y envia a peticion
+            Key key = new Key(apikey, userkey, username);
+            sendNetworkRequest(key);
+            Intent intent = new Intent(getApplicationContext(), SeriesActivity.class);
+            startActivity(intent);
 
             }
         });
 
-        //loadToken();
     }
 
     //peticion POST obtener token
@@ -71,8 +69,8 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<Key>() {
             @Override
             public void onResponse(Call<Key> call, Response<Key> response) {
-                Toast.makeText(getApplicationContext(), "token: " + response.body().getToken(), Toast.LENGTH_SHORT).show();
-                Log.e(TAG,"getToken: "+ response.body().getToken());
+                Toast.makeText(getApplicationContext(), "token: " + response.body().getToken().substring(0,10)+"...", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "getToken: " + response.body().getToken());
                 token = response.body().getToken();
                 saveToken(token);
                 isSuccess = true;
@@ -89,16 +87,13 @@ public class LoginActivity extends AppCompatActivity {
         });
         return isSuccess;
     }
-    public void saveToken(String token){
-        Log.e(TAG,"savetoken: "+token);
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+
+    //guardar token en SharedPreferences
+    public void saveToken(String token) {
+        Log.e(TAG, "savetoken: " + token);
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TOKEN, token).commit();
     }
-    public  void loadToken(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        texto = sharedPreferences.getString(TOKEN,"");
-        Log.e("TOKEN GUARDADO", texto);
 
-    }
 }

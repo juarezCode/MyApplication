@@ -67,7 +67,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Adapter","click "+mDataset.get(position).getId());
+                Log.e("Adapter","click "+mDataset.get(position).getIdSerie());
                 Toast.makeText(v.getContext(),mDataset.get(position).getSeriesName(),Toast.LENGTH_SHORT).show();
             }
         });

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,48 +7,55 @@
     android:background="@color/back_gray"
     tools:context=".SeriesActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/appbar_toolbar" />
-
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:cardElevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include
+            android:id="@+id/include"
+            layout="@layout/appbar_toolbar" />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:cardElevation="4dp">
 
-        <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edtSearchview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".15"
+                    android:gravity="center"
+                    android:hint="Serie a buscar..." />
+
+                <Button
+                    android:id="@+id/btnSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".85"
+                    android:background="@color/colorAccent"
+                    android:foreground="@drawable/ic_search" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerSeries"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_marginTop="8dp">
 
-            <EditText
-                android:id="@+id/edtSearchview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".15"
-                android:gravity="center"
-                android:hint="Serie a buscar..." />
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
 
-            <Button
-                android:id="@+id/btnSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".85"
-                android:background="@color/colorAccent"
-                android:foreground="@drawable/ic_search" />
-
-        </LinearLayout>
-
-
-    </android.support.v7.widget.CardView>
-
-
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>

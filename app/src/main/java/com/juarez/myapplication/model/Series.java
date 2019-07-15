@@ -1,7 +1,7 @@
 package com.juarez.myapplication.model;
 
 public class Series {
-
+    private int idSerie = 0;
     private String [] aliases;
     private String banner;
     private String firstAired;
@@ -12,7 +12,8 @@ public class Series {
     private String slug;
     private String status;
 
-    public Series(String [] aliases, String banner, String firstAired, int id, String network, String overview, String seriesName, String slug, String status) {
+    public Series(int idSerie, String [] aliases, String banner, String firstAired, int id, String network, String overview, String seriesName, String slug, String status) {
+        this.idSerie = idSerie;
         this.aliases = aliases;
         this.banner = banner;
         this.firstAired = firstAired;
@@ -24,7 +25,16 @@ public class Series {
         this.status = status;
     }
 
-    public Series() {
+    //public Series() {
+    //}
+
+
+    public int getIdSerie() {
+        return idSerie = idSerie;
+    }
+
+    public void setIdSerie(int idSerie) {
+        this.idSerie = idSerie;
     }
 
     public String [] getAliases() {

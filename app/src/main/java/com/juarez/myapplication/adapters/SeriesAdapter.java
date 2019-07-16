@@ -19,7 +19,7 @@ import com.juarez.myapplication.model.Series;
 
 import java.util.ArrayList;
 
-public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder>{
+public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder> {
     private Context mContext;
     private ArrayList<Series> mDataset;
     private String endpointBanner = "https://www.thetvdb.com/banners/";
@@ -49,7 +49,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
     // Crea nuevas vistas (invocadas pot el layout manager)
     @Override
     public SeriesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
+                                                       int viewType) {
         // crear una nueva vista
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.cardview_series, parent, false);
@@ -62,7 +62,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
     public void onBindViewHolder(final SeriesAdapter.ViewHolder holder, final int position) {
         // - obtiene los elementos del dataset en una posicion definida
         Glide.with(mContext)
-                .load(endpointBanner+mDataset.get(position).getBanner())
+                .load(endpointBanner + mDataset.get(position).getBanner())
                 .placeholder(R.drawable.mediomelon)
                 .into(holder.photo);
         holder.serieName.setText(mDataset.get(position).getSeriesName());
@@ -70,16 +70,28 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Adapter","id: "+mDataset.get(position).getId());
-                Toast.makeText(v.getContext(),mDataset.get(position).getSeriesName(),Toast.LENGTH_SHORT).show();
+                Log.e("Adapter", "id: " + mDataset.get(position).getId());
+                Toast.makeText(mContext, mDataset.get(position).getSeriesName(), Toast.LENGTH_SHORT).show();
+
+                Series serie = new Series(
+                        mDataset.get(position).getAliases(),
+                        mDataset.get(position).getBanner(),
+                        mDataset.get(position).getFirstAired(),
+                        mDataset.get(position).getId(),
+                        mDataset.get(position).getNetwork(),
+                        mDataset.get(position).getOverview(),
+                        mDataset.get(position).getSeriesName(),
+                        mDataset.get(position).getSlug(),
+                        mDataset.get(position).getStatus());
 
                 Intent intent = new Intent(v.getContext(), DetailActivity.class);
-                intent.putExtra("seriesName",  mDataset.get(position).getSeriesName());
-                v.getContext().startActivity(intent);
+                intent.putExtra("seriesName", mDataset.get(position).getSeriesName());
+                intent.putExtra("serie", serie);
+                mContext.startActivity(intent);
             }
         });
 
-        }
+    }
 
     // Devuelve el tamaño de tu dataset
     @Override

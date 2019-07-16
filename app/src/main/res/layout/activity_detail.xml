@@ -4,26 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/back_gray"
     tools:context=".DetailActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/appbar_toolbar"/>
+        <include layout="@layout/appbar_toolbar" />
+
         <TextView
             android:id="@+id/detailSeriesName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre de la serie"
-            android:textSize="30sp"
             android:gravity="center"
-            android:textColor="@android:color/black"/>
-        <include layout="@layout/bottomnavigationview"/>
+            android:text="Nombre de la serie"
+            android:textColor="@android:color/black"
+            android:textSize="30sp" />
+
+        <include layout="@layout/bottomnavigationview" />
+
         <FrameLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/white" />
     </LinearLayout>
 
 

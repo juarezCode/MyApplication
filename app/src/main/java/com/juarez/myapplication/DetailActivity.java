@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.juarez.myapplication.fragments.SerieActorFragment;
 import com.juarez.myapplication.fragments.SerieDetailFragment;
 import com.juarez.myapplication.fragments.SerieEpisodeFragment;
+import com.juarez.myapplication.model.Series;
 
 public class DetailActivity extends AppCompatActivity {
     private TextView detailSeriesName;
@@ -21,6 +22,9 @@ public class DetailActivity extends AppCompatActivity {
     private Fragment fragment;
     private FragmentManager fragmentManager;
     private String TAG = "DetailActivity";
+    public static String dataSeriesName;
+    public static Series serie;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +33,8 @@ public class DetailActivity extends AppCompatActivity {
         detailSeriesName = findViewById(R.id.detailSeriesName);
 
         //recibir  datos
-        String dataSeriesName = getIntent().getStringExtra("seriesName");
+        serie= (Series) getIntent().getExtras().getSerializable("serie");
+        dataSeriesName = serie.getSeriesName();
 
         //Mostrar valores a la pantalla
         detailSeriesName.setText(dataSeriesName);

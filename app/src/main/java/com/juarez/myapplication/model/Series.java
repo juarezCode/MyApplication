@@ -1,8 +1,9 @@
 package com.juarez.myapplication.model;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Series {
+public class Series implements Serializable {
     private int idSerie;
     private String [] aliases;
     private String banner;

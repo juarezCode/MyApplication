@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class SeriesActivity extends AppCompatActivity {
     private Button btnSearch;
     private EditText edtSearch;
     private Button btnErase;
+    private ProgressBar progressBar;
     private String searchValue;
     RecyclerView recyclerSeries;
     private SeriesAdapter mAdapter;
@@ -56,6 +58,7 @@ public class SeriesActivity extends AppCompatActivity {
         btnSearch = findViewById(R.id.btnSearch);
         edtSearch = findViewById(R.id.edtSearchview);
         btnErase = findViewById(R.id.btnErase);
+        progressBar = findViewById(R.id.progressBar2);
         //recyclerview
         recyclerSeries = findViewById(R.id.recyclerSeries);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -97,7 +100,7 @@ public class SeriesActivity extends AppCompatActivity {
                 edtSearch.setText("");
                 btnSearch.setVisibility(View.VISIBLE);
                 //limpio adaptador y y recyvlerview, ademas oculto el boton
-                if (myDataSet != null){
+                if (myDataSet != null) {
                     myDataSet.clear();
                     mAdapter.notifyDataSetChanged();
                 }
@@ -131,6 +134,7 @@ public class SeriesActivity extends AppCompatActivity {
     }
 
     private void getSearchRequest() {
+        progressBar.setVisibility(View.VISIBLE);
         //comfig Retrofit
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("https://" + LoginActivity.endpoint + "/")
@@ -152,9 +156,9 @@ public class SeriesActivity extends AppCompatActivity {
 
                     Log.e(TAG, "Series Found: " + String.valueOf(response.body().getSeries()));
 
-                    for (Series series : response.body().getSeries()){
+                    for (Series series : response.body().getSeries()) {
                         series.setIdSerie(count.incrementAndGet());
-                        Log.e(TAG, series.getIdSerie()+" nombre de la serie: " + series.getSeriesName());
+                        Log.e(TAG, series.getIdSerie() + " nombre de la serie: " + series.getSeriesName());
 
                         myDataSet.add(series);
                     }
@@ -164,16 +168,19 @@ public class SeriesActivity extends AppCompatActivity {
                     Log.e(TAG, "no se encontraron coincidencias con : " + searchValue);
                     Toast.makeText(getApplicationContext(), "no se encontraron coincidencias con :" + searchValue, Toast.LENGTH_SHORT).show();
                 }
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<Data> call, Throwable t) {
                 Log.e(TAG, t.toString());
+                progressBar.setVisibility(View.GONE);
             }
         });
 
 
     }
+
     //config Toolbar personalizado
     private void showToolbar() {
         TextView toolbarTitle = findViewById(R.id.toolbar_title);

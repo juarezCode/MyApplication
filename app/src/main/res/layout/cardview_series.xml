@@ -4,17 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardViewAlbumes"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginRight="8dp"
-    android:layout_marginBottom="10dp"
     cardview:cardCornerRadius="@dimen/cardview_default_elevation"
     cardview:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -27,7 +26,7 @@
         <ImageView
             android:id="@+id/imageSeriesBack"
             android:layout_width="match_parent"
-            android:layout_height="70dp" />
+            android:layout_height="wrap_content" />
 
 
     </LinearLayout>

@@ -32,4 +32,11 @@ public interface IServices {
     //https://omdbapi.com/?i=tt0944947&apikey=2f1f55d7&plot=full
     @GET("/")
     Call<SerieDetalle> getDetailSerie2(@Query("i") String id,@Query("apikey") String apiKey,@Query("plot") String plot,@Header("Authorization") String authToken);
+
+    //servicio que obtiene los actores por serie
+    //https://{{endpoint}}/series/:id/actors
+    @GET("series/{id}/actors")
+    Call<DataActor> getActors(@Path("id") int idSerie, @Header("Authorization") String authToken);
+
+
 }

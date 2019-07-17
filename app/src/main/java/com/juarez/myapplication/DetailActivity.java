@@ -7,9 +7,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.juarez.myapplication.fragments.SerieActorFragment;
 import com.juarez.myapplication.fragments.SerieDetailFragment;
@@ -23,6 +27,7 @@ public class DetailActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private String TAG = "DetailActivity";
     public static String dataSeriesName;
+    public static int idSerie;
     public static Series serie;
 
 
@@ -31,10 +36,26 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         detailSeriesName = findViewById(R.id.detailSeriesName);
+        Button back = findViewById(R.id.tootlbar_arrow);
+        Button melon = findViewById(R.id.tootlbar_image);
+        melon.setVisibility(View.GONE);
+        back.setVisibility(View.VISIBLE);
+
+
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),":(",Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
 
         //recibir  datos
         serie= (Series) getIntent().getExtras().getSerializable("serie");
         dataSeriesName = serie.getSeriesName();
+        idSerie = serie.getId();
 
         //Mostrar valores a la pantalla
         detailSeriesName.setText(dataSeriesName);
@@ -72,4 +93,5 @@ public class DetailActivity extends AppCompatActivity {
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.container, fragment).commit();
     }
+
 }

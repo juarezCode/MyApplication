@@ -139,6 +139,7 @@ public class SerieDetailFragment extends Fragment {
                         progressBar.setVisibility(View.GONE);
                     }
                 } else {
+                    Toast.makeText(getContext(), "Error de autenticacion", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, "error de autenticacion");
                 }
             }
@@ -178,7 +179,7 @@ public class SerieDetailFragment extends Fragment {
                     txtRating.setText(response.body().getImdbRating()+"/10");
                     Glide.with(getContext())
                             .load(response.body().getPoster())
-                            .placeholder(R.drawable.mediomelon)
+                            .placeholder(R.drawable.toolbarmediomelon)
                             .into(imageSerie);
                     Log.e(TAG, "servicio detalles 2 correcto");
                 } else {

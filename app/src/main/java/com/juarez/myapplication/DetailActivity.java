@@ -38,8 +38,11 @@ public class DetailActivity extends AppCompatActivity {
         detailSeriesName = findViewById(R.id.detailSeriesName);
         Button back = findViewById(R.id.tootlbar_arrow);
         Button melon = findViewById(R.id.tootlbar_image);
+        Button rigth = findViewById(R.id.tootlbar_image_rigth);
         melon.setVisibility(View.GONE);
         back.setVisibility(View.VISIBLE);
+        rigth.setVisibility(View.VISIBLE);
+
 
 
 

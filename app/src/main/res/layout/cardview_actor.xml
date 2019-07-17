@@ -20,6 +20,7 @@
             android:id="@+id/imgActorImage"
             android:layout_width="100dp"
             android:layout_height="140dp"
+            android:background="@color/back_gray"
             android:scaleType="centerCrop" />
 
         <TextView

@@ -65,7 +65,7 @@ public class ActorAdapter extends RecyclerView.Adapter<ActorAdapter.ViewHolder>{
         // - obtiene los elementos del dataset en una posicion definida
         Glide.with(mContext)
                 .load(endpointBanner + mDataset.get(position).getImage())
-                .placeholder(R.drawable.mediomelon)
+                .placeholder(R.drawable.toolbarmediomelon)
                 .into(holder.actorPhoto);
         holder.actorName.setText(mDataset.get(position).getName());
         holder.actorRol.setText(mDataset.get(position).getRole());

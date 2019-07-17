@@ -63,7 +63,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
         // - obtiene los elementos del dataset en una posicion definida
         Glide.with(mContext)
                 .load(endpointBanner + mDataset.get(position).getBanner())
-                .placeholder(R.drawable.banner2)
+                .placeholder(R.drawable.bannermediomelon)
                 .into(holder.photo);
         holder.serieName.setText(mDataset.get(position).getSeriesName());
         //lanzar a pantalla detalles de serie

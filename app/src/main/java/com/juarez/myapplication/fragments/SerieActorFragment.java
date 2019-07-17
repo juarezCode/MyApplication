@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.juarez.myapplication.DetailActivity;
@@ -47,6 +48,7 @@ public class SerieActorFragment extends Fragment {
     private String token;
     private RecyclerView recyclerActor;
     private ProgressBar progressBar;
+    private TextView txtActorsNotFound;
     private ActorAdapter mAdapter;
     private ArrayList<Actor> myDataSet;
     private int serieId;
@@ -65,11 +67,13 @@ public class SerieActorFragment extends Fragment {
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         recyclerActor.setLayoutManager(gridLayoutManager);
         progressBar = view.findViewById(R.id.progressBar4);
+        txtActorsNotFound = view.findViewById(R.id.txtActorsNotFound);
+
         serieId = DetailActivity.idSerie;
         Log.e(TAG,"id que necesito:"+serieId);
-
         loadToken();
         getActorshRequest();
+
         return  view;
     }
     public void loadToken() {
@@ -122,7 +126,10 @@ public class SerieActorFragment extends Fragment {
                     refreshDataSet();
 
                 }else{
+                    //Toast.makeText(getContext(), "Error de autenticacion", Toast.LENGTH_SHORT).show();
                     Log.e(TAG,"Error de autenticacion");
+                    Log.e(TAG,"no existen actores");
+                    txtActorsNotFound.setVisibility(View.VISIBLE);
                 }
                 progressBar.setVisibility(View.GONE);
 

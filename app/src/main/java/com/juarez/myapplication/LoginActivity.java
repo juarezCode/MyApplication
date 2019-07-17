@@ -78,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(),SeriesActivity.class);
                     startActivity(intent);
                 }else{
+                    Toast.makeText(getApplicationContext(), "Error de autenticacion", Toast.LENGTH_SHORT).show();
                     Log.e(TAG,"Error de credenciales");
                 }
                 progressBar.setVisibility(View.GONE);

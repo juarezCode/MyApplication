@@ -183,11 +183,8 @@ public class SeriesActivity extends AppCompatActivity {
 
     //config Toolbar personalizado
     private void showToolbar() {
-        TextView toolbarTitle = findViewById(R.id.toolbar_title);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbarTitle.setText("medio\nmelon");
-
     }
 }

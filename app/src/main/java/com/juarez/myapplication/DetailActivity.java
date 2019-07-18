@@ -28,7 +28,7 @@ public class DetailActivity extends AppCompatActivity {
     private String TAG = "DetailActivity";
     public static String dataSeriesName;
     public static int idSerie;
-    public static Series serie;
+    private Series serie;
 
 
     @Override

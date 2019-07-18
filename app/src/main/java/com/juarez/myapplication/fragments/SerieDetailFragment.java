@@ -25,6 +25,7 @@ import com.juarez.myapplication.model.Serie;
 import com.juarez.myapplication.model.SerieDetalle;
 import com.juarez.myapplication.model.Series;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -55,6 +56,7 @@ public class SerieDetailFragment extends Fragment {
     private TextView txtSeason;
     private ProgressBar progressBar;
     public static String TAG = "SerieDetailFragment";
+    public static int totalSeasons;
     private int idSerieDetail;
     private String token;
 
@@ -79,8 +81,7 @@ public class SerieDetailFragment extends Fragment {
         txtSeason = view.findViewById(R.id.txtFragDetailSeason);
 
 
-        DetailActivity detailActivity = new DetailActivity();
-        idSerieDetail = detailActivity.serie.getId();
+        idSerieDetail = DetailActivity.idSerie;
         Log.e(TAG, "id:" + idSerieDetail);
 
         loadToken();
@@ -173,6 +174,10 @@ public class SerieDetailFragment extends Fragment {
                     Log.e(TAG, "" + response.body().getTotalSeasons());
                     Log.e(TAG, "" + response.body().getImdbRating());
                     Log.e(TAG, "" + response.body().getPoster());
+                    Log.e(TAG,"numero de temporadas:"+response.body().getTotalSeasons());
+
+                    totalSeasons = Integer.parseInt(response.body().getTotalSeasons());
+                    Log.e(TAG,"int: "+totalSeasons);
 
                     txtGenre.setText("" + response.body().getGenre());
                     txtSeason.setText("" + response.body().getTotalSeasons());

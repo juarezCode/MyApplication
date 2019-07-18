@@ -38,5 +38,9 @@ public interface IServices {
     @GET("series/{id}/actors")
     Call<DataActor> getActors(@Path("id") int idSerie, @Header("Authorization") String authToken);
 
+    //https://{{endpoint}}/series/:id/episodes/query?airedSeason=1
+    @GET("series/{id}/episodes/query")
+    Call<DataSeason> getSeason (@Path("id") int id, @Query("airedSeason") String season, @Header("Authorization") String authToken);
+
 
 }

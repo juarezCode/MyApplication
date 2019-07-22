@@ -2,6 +2,7 @@ package com.juarez.myapplication.fragments;
 
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.juarez.myapplication.model.Chapter;
 import com.juarez.myapplication.model.DataSeason;
 import com.juarez.myapplication.model.IServices;
 import com.juarez.myapplication.pagination.AdapterTemporada;
+import com.juarez.myapplication.pagination.RecyclerViewItemClickListener;
 import com.juarez.myapplication.pagination.Temporada;
 
 import java.util.ArrayList;
@@ -37,7 +39,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SerieEpisodeFragment extends Fragment implements AdapterTemporada.OnSeasonListener {
+public class SerieEpisodeFragment extends Fragment {
     private String token;
     public static final String endpointSeason = "api.thetvdb.com";
     private static final String SHARED_PREFS = "sharedPrefs";
@@ -52,6 +54,7 @@ public class SerieEpisodeFragment extends Fragment implements AdapterTemporada.O
     private ProgressBar progressBar;
     private int serieId;
     private int totalSeasons;
+    TextView numberTemporada;
 
 
     public SerieEpisodeFragment() {
@@ -68,6 +71,7 @@ public class SerieEpisodeFragment extends Fragment implements AdapterTemporada.O
         Log.e(TAG, "id que necesito: " + serieId);
         Log.e(TAG, "total de temporadas: " + totalSeasons);
         progressBar = view.findViewById(R.id.progressBar);
+        numberTemporada = view.findViewById(R.id.txtNumerSeason);
 
         //recycler Episodes
         recyclerChapter = view.findViewById(R.id.recyclerChapter);
@@ -81,17 +85,29 @@ public class SerieEpisodeFragment extends Fragment implements AdapterTemporada.O
         temporada.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerTemporada.setLayoutManager(temporada);
 
+        //crea arreglo de temporadas
         listaTemporada = new ArrayList<Temporada>();
 
         for (int i = 1; i <= totalSeasons; i++) {
             Log.e(TAG, "episodio: " + i);
             listaTemporada.add(new Temporada(i));
         }
-
-        adapterTemporada = new AdapterTemporada(getContext(), listaTemporada, this);
+        adapterTemporada = new AdapterTemporada(getContext(), listaTemporada);
         recyclerTemporada.setAdapter(adapterTemporada);
+
+        adapterTemporada.setOnItemClickListener( new RecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                getSearchEpisodeRequest(position+1);
+
+            }
+        });
+
+
         if (totalSeasons <= 0){
-            Toast.makeText(getContext(),"No existen temporadas",Toast.LENGTH_SHORT).show();
+            myDataSet = new ArrayList<Chapter>();//crear ArrayList Vacio
+            myDataSet.clear();
+            Toast.makeText(getContext(),"No se encontraron temporadas",Toast.LENGTH_SHORT).show();
         }else{
             loadToken();
             getSearchEpisodeRequest(1);
@@ -121,13 +137,6 @@ public class SerieEpisodeFragment extends Fragment implements AdapterTemporada.O
             mAdapter.notifyDataSetChanged();
 
         }
-
-    }
-
-    @Override
-    public void onSeasonClick(int posicion) {
-        Toast.makeText(getContext(), String.valueOf(listaTemporada.get(posicion).getNumber()), Toast.LENGTH_SHORT).show();
-        getSearchEpisodeRequest(posicion + 1);
 
     }
 

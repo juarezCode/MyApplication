@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="58dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="primera emision"
@@ -174,20 +174,27 @@
         app:layout_constraintStart_toEndOf="@+id/season"
         app:layout_constraintTop_toBottomOf="@+id/txtFragDetailDateHour" />
 
-    <TextView
-        android:id="@+id/txtFragDetailOverview"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="sinopsis"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sinopsis" />
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/sinopsis"
+        tools:layout_editor_absoluteX="-55dp">
+
+        <TextView
+            android:id="@+id/txtFragDetailOverview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:gravity="center"
+            android:text="sinopsis"
+            android:textColor="@android:color/black" />
+    </ScrollView>
+
 
     <ProgressBar
         android:id="@+id/progressBar3"

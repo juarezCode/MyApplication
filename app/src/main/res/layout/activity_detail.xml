@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Nombre de la serie"
-            android:textColor="@android:color/black"
+
             android:textSize="30sp" />
 
         <include layout="@layout/bottomnavigationview" />

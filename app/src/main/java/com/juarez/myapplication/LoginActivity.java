@@ -42,6 +42,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         btnLogin = findViewById(R.id.btnLogin);
         progressBar = findViewById(R.id.progressBar);
+        //Checar si el token ya se guardo
+        String tokenCargado = loadToken();
+        if(tokenCargado.length() > 0) {
+            Intent intent = new Intent(getApplicationContext(), SeriesActivity.class);
+            startActivity(intent);
+        }
 
         //comportamiento boton obtenerToken (Login)
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -55,9 +61,17 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+    public String loadToken() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        token = sharedPreferences.getString(TOKEN, "");
+        Log.e(TAG, "loadtoken: " + token);
+
+        return token;
+
+    }
 
     //peticion POST obtener token
-    private void sendNetworkRequest(Key key) {
+    private void sendNetworkRequest(Key key)  {
         progressBar.setVisibility(View.VISIBLE);
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("https://" + endpoint + "/")
@@ -72,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Key> call, Response<Key> response) {
                 if(response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "token: " + response.body().getToken().substring(0,10)+"...", Toast.LENGTH_LONG).show();
-                    Log.e(TAG, "getToken: " + response.body().getToken());
+                    Log.e(TAG, "New Token: " + response.body().getToken());
                     token = response.body().getToken();
                     saveToken(token);
                     Intent intent = new Intent(getApplicationContext(),SeriesActivity.class);
@@ -102,5 +116,4 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TOKEN, token).commit();
     }
-
 }

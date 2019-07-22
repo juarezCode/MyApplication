@@ -7,6 +7,7 @@
     android:id="@+id/bottomnavigationview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:itemBackground="@drawable/selector_back_navigationview"
     app:menu="@menu/bottomnavigationview_menu"
     app:itemIconTint="@drawable/selector_navigationview"
     app:itemTextColor="@drawable/selector_navigationview">

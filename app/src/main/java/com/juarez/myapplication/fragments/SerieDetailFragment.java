@@ -123,12 +123,17 @@ public class SerieDetailFragment extends Fragment {
 
                     //asignar propiedades a las vistas
                     txtOverview.setText("" + response.body().getSerie().getOverview());
-                    if (response.body().getSerie().getAirsTime().length() == 0 && response.body().getSerie().getAirsTime().length() == 0) {
+
+                    txtOverview.setText("" + response.body().getSerie().getOverview());
+                    if (response.body().getSerie().getAirsTime().length() == 0 && response.body().getSerie().getAirsTime().length() == 0)
                         txtDateHour.setText("no disponible");
-                    } else {
+                    else
                         txtDateHour.setText(response.body().getSerie().getAirsTime() + " " + response.body().getSerie().getAirsDayOfWeek());
-                    }
-                    txtFisrtAired.setText("" + response.body().getSerie().getFirstAired());
+
+                    if(response.body().getSerie().getFirstAired() == null || response.body().getSerie().getFirstAired().length() == 0)
+                        txtFisrtAired.setText("no disponible");
+                    else
+                        txtFisrtAired.setText("" + response.body().getSerie().getFirstAired());
 
                     Log.e(TAG, "Servicio 1 correcto");
 
@@ -136,6 +141,8 @@ public class SerieDetailFragment extends Fragment {
                     if(imdbId.length() != 0){
                         getSearchImdbIDRequest();
                     }else{
+                        totalSeasons = 0;
+                        ser2EmptyField();
                         Toast.makeText(getContext(),"algunos datos no fueron encontrados en el servidor",Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
                     }
@@ -200,4 +207,9 @@ public class SerieDetailFragment extends Fragment {
         });
     }
 
+    private void ser2EmptyField(){
+        txtGenre.setText("No disponible");
+        txtSeason.setText("0");
+        txtRating.setText("No disponible");
+    }
 }

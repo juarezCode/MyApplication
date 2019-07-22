@@ -48,6 +48,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight=".15"
                     android:gravity="center"
+                    android:inputType="text"
+                    android:maxLines="1"
                     android:hint="Serie a buscar..." />
 
                 <Button

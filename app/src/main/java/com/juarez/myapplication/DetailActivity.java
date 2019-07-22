@@ -43,13 +43,9 @@ public class DetailActivity extends AppCompatActivity {
         back.setVisibility(View.VISIBLE);
         rigth.setVisibility(View.VISIBLE);
 
-
-
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),":(",Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

@@ -129,7 +129,8 @@ public class SerieActorFragment extends Fragment {
                     //Toast.makeText(getContext(), "Error de autenticacion", Toast.LENGTH_SHORT).show();
                     Log.e(TAG,"Error de autenticacion");
                     Log.e(TAG,"no existen actores");
-                    txtActorsNotFound.setVisibility(View.VISIBLE);
+                    //txtActorsNotFound.setVisibility(View.VISIBLE);
+                    Toast.makeText(getContext(),"No se encontraron actores",Toast.LENGTH_SHORT).show();
                 }
                 progressBar.setVisibility(View.GONE);
 

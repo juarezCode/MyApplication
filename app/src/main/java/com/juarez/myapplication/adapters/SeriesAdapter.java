@@ -71,9 +71,8 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 Log.e("Adapter", "id: " + mDataset.get(position).getId());
-                Toast.makeText(mContext, mDataset.get(position).getSeriesName(), Toast.LENGTH_SHORT).show();
 
-                Series serie = new Series(
+                /*Series serie = new Series(
                         mDataset.get(position).getAliases(),
                         mDataset.get(position).getBanner(),
                         mDataset.get(position).getFirstAired(),
@@ -82,11 +81,11 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.ViewHolder
                         mDataset.get(position).getOverview(),
                         mDataset.get(position).getSeriesName(),
                         mDataset.get(position).getSlug(),
-                        mDataset.get(position).getStatus());
+                        mDataset.get(position).getStatus());*/
 
                 Intent intent = new Intent(v.getContext(), DetailActivity.class);
                 intent.putExtra("seriesName", mDataset.get(position).getSeriesName());
-                intent.putExtra("serie", serie);
+                intent.putExtra("serie", mDataset.get(position));
                 mContext.startActivity(intent);
             }
         });

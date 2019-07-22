@@ -14,13 +14,16 @@ import java.util.ArrayList;
 public class AdapterTemporada extends RecyclerView.Adapter<AdapterTemporada.ViewHolder> {
     private Context mContext;
     public ArrayList<Temporada> mSeasons;
-    private OnSeasonListener mOnSeasonListener;
+    private RecyclerViewItemClickListener recyclerViewItemClickListener;
+
+    public void setOnItemClickListener(RecyclerViewItemClickListener recyclerViewItemClickListener){
+        this.recyclerViewItemClickListener=recyclerViewItemClickListener;
+    }
 
     // constructor
-    public AdapterTemporada(Context context, ArrayList<Temporada> myDataset, OnSeasonListener onSeasonListener) {
+    public AdapterTemporada(Context context, ArrayList<Temporada> myDataset) {
         mSeasons = myDataset;
         mContext = context;
-        this.mOnSeasonListener = onSeasonListener;
     }
 
     // Crea nuevas vistas (invocadas pot el layout manager)
@@ -31,13 +34,13 @@ public class AdapterTemporada extends RecyclerView.Adapter<AdapterTemporada.View
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_temporada, parent, false);
 
-        return new AdapterTemporada.ViewHolder(v, mOnSeasonListener);
+        return new AdapterTemporada.ViewHolder(v);
     }
 
     // Reemplazar el contenido del layout manager
     @Override
     public void onBindViewHolder(final AdapterTemporada.ViewHolder holder, final int position) {
-
+        holder.position=position;
         holder.numberTemporada.setText(String.valueOf(mSeasons.get(position).getNumber()));
 
     }
@@ -49,28 +52,25 @@ public class AdapterTemporada extends RecyclerView.Adapter<AdapterTemporada.View
 
 
     // implememta de interface
-    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public int position=0;
         TextView numberTemporada;
-        OnSeasonListener onSeasonListener;//instancia
 
-        ViewHolder(View v, OnSeasonListener onSeasonListener) {//parametro
+        ViewHolder(View v) {//parametro
             super(v);
             numberTemporada = v.findViewById(R.id.txtNumerSeason);
-            this.onSeasonListener = onSeasonListener;
-            itemView.setOnClickListener(this);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //When item view is clicked, trigger the itemclicklistener
+                    //Because that itemclicklistener is indicated in MainActivity
+                    recyclerViewItemClickListener.onItemClick(v,position);
+                }
+            });
         }
 
-        @Override
-        public void onClick(View v) {
-            onSeasonListener.onSeasonClick(getAdapterPosition());
-        }
     }
 
-    //interface
-    public interface OnSeasonListener {
-        void onSeasonClick(int posicion);
-    }
 
 
 }
